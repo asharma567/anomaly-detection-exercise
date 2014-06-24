@@ -25,7 +25,7 @@ We will be focusing on the 'rows-loaded-api' column to try to detect any anomalo
 
 4.  We will look at a given point's delta from the mean (an approximation of a pointwise hypothesis test for outliers).  Plot both 2 and 3 standard deviations from the moving average.
 
-![](mov_avg.png)
+![](img/mov_avg.png)
 
 5. How many data points will be considered anomalous if we used 2 standard deviations away from the mean?  How about 3 standard deviations?  What is the probablity of a point existing 3 standard deviations away from the mean (assuming normality)?
 
