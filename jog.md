@@ -1,4 +1,4 @@
-For today's job we will be exploring a few techniques to detect outliers and anomalous data points.  The sprint will be broken up into two parts, static anomaly detection and temporal anomaly detection.
+For today's jog we will be exploring a few techniques to detect outliers and anomalous data points.  The sprint will be broken up into two parts, static anomaly detection and temporal anomaly detection.
 
 ## Anomalies in Time
 
@@ -14,7 +14,7 @@ We will be looking at data requests for [sfdata.gov](https://data.sfgov.org/) fo
 
 ### Moving Window Statistics
 
-2. Look at what each trend looks like.  Since there are quite a few columns you probably want to plot 4-5 at a time.
+2. Look at what each column trend looks like.  Since there are quite a few columns you probably want to plot 4-5 at a time.
 
 ![](img/pandas_series.png)
 
@@ -33,7 +33,7 @@ We will be focusing on the 'rows-loaded-api' column to try to detect any anomalo
 
 We can also try a slightly more sophisticated approach when we know the type of data generating process (people).  We will look at page views for this part of the exercise (since API access is most likely programmatic and may not be governed by a distribution)
 
-1.  Using the same dataset (`data/access.csv`) will will look at the 'page-views' column.  Plot this?
+1.  Using the same dataset (`data/access.csv`) will will look at the 'page-views' column.  Plot this.
 
 2. Are there any interesting patterns you can ascertain?  Plot a few moving averages (with varying window lengths) on the plot.
 
@@ -42,7 +42,7 @@ We can also try a slightly more sophisticated approach when we know the type of 
 
 4. If you had to model this page view data, what distribution would you use (hint: it is one we have covered, we have count data, and it is an aggregate value)?
 
-5. Assuming this distribution at least somewhat approximates the process, use the method of moments (or MLE) to find the ideal parameter for the distribution.
+5. Assuming this distribution at least somewhat approximates the process, use the method of moments (or MLE) to find the ideal parameter(s) for the distribution.
 
 6. According to this distribution, what is average number of visitors expected per day?
 
@@ -50,7 +50,7 @@ We can also try a slightly more sophisticated approach when we know the type of 
     * How many points are flagged?
     * How many points would be flagged if we used a threshold of 0.1%
 
-## Phony Domains
+## Phony Domains (static analysis)
 
 ![](http://media.giphy.com/media/htm4lNjE2JQC4/giphy.gif)
 
@@ -78,9 +78,9 @@ Domain names that are labeled is not enough unfortunately to detect fake names (
 
 1. Add a count column to our dataset that represents the length of each domain.  This will help us in distinguishing fake from real names.
 
-2. Hopefully you remember [entropy](http://en.wikipedia.org/wiki/Entropy_(information_theory)) from our decision tree sprint.  Write a function to calculate the entropy of each name.  Example code on [Rosetta Code](http://rosettacode.org/wiki/Entropy#Python:_More_succinct_version)
+2. Hopefully you remember [entropy](http://en.wikipedia.org/wiki/Entropy_(information_theory)) from our decision tree sprint.  Write a function to calculate the entropy of each name.  Example code can be found on [Rosetta Code](http://rosettacode.org/wiki/Entropy#Python:_More_succinct_version).
 
-3. Calculate the entropy of each domain name and add this as a column. Use the relative frequency of each character to calculate the entropy.
+3. Calculate the entropy of each domain name and add this as a column (use the relative frequency of each character to calculate the entropy).
 
 ### Visual metrics
 
@@ -102,22 +102,24 @@ While anomaly detection can be automated and sophisticated, it also can be accom
 
 ### Supervised
 
-Now that we have some properly featurized data we can apply the typical supervised learning pipeline. Since our feature space is potential non-linear and complicated, we will try to fit a random forest to our data.
+Now that we have some properly featurized data we can apply the typical supervised learning pipeline. Since our feature space is potentially non-linear and complicated, we will try to fit a random forest to our data.
 
-1. Using scikit-learn's RandomForest, fit our feature matrix.  You will want to create a test/train split or perform cross validation.
+1. Using scikit-learn's RandomForest, fit the feature matrix.  You will want to create a test/train split or perform cross validation.
 
 2. How well does the model score on accuracy?
 
-3.  As we know all too well, accuracy is a very misleading metric.  Create confusion matrix to compare the false positives and false negatives.
+4. One issue with anomaly detection is that anomalies are... well, anomalous. How many of each class are there?
+
+3.  As we know all too well, accuracy is a very misleading metric (especially with unbalanced classes).  Create confusion matrix to compare the false positives and false negatives.
     * Which is worse in this case (false positive or false negative)?
 
-4. Random forest also has the added benefit of performing some feature selection for us.   Since we only has a small number of features this isn't too important from a selection perspective, but it can tell us a stringer signal for a spoofed domain.  Which feature is the best indicator of a fake domain?
+4. Random forest also has the added benefit of performing some feature selection for us.   Since we only have a small number of features this isn't too important from a selection/reduction perspective, but it can tell us a stringer signal for a spoofed domain.  Which feature is the best indicator of a fake domain?
 
 4. We always usually want a second opinion in life.  Use scikit-learn's Logistic regression and create ROC plots for the LogisticRegression and Random forest.  Which one performs better?  And what might we want to set as our threshold?
 
 5. A final supervised technique we will cover is a one class SVM.  You basically fit an SVM to only the inliers.  Using scikit-learn, fit a [one-class SVM](http://scikit-learn.org/stable/auto_examples/svm/plot_oneclass.html#example-svm-plot-oneclass-py) to only the real domain names.
 
-6. How well does a one-class SVM perform on the anomalous domains?  In a hold-out set, test performance on a mix of real and fake domains.  Does is it able to detect the fake domains?
+6. How well does a one-class SVM perform on the anomalous domains?  In a hold-out set, test performance on a mix of real and fake domains.  How well does it detect the fake domains?
 
 ## Unsupervised
 
