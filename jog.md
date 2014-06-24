@@ -25,7 +25,7 @@ We will be focusing on the 'rows-loaded-api' column to try to detect any anomalo
 
 4.  We will look at a given point's delta from the mean (an approximation of a pointwise hypothesis test for outliers).  Plot both 2 and 3 standard deviations from the moving average.
 
-![](mov_avg.png)
+![](img/mov_avg.png)
 
 5. How many data points will be considered anomalous if we used 2 standard deviations away from the mean?  How about 3 standard deviations?  What is the probablity of a point existing 3 standard deviations away from the mean (assuming normality)?
 
@@ -38,6 +38,7 @@ We can also try a slightly more sophisticated approach when we know the type of 
 2. Are there any interesting patterns you can ascertain?  Plot a few moving averages (with varying window lengths) on the plot.
 
 3. There may be some interesting patterns, try to find what might be the cause of some of these patterns.  Look at a few of the other columns (think what might relate to page views) and try to find a correlated spike.
+    * Try to find out what happened on that day
 
 4. If you had to model this page view data, what distribution would you use (hint: it is one we have covered, we have count data, and it is an aggregate value)?
 
@@ -55,7 +56,7 @@ We can also try a slightly more sophisticated approach when we know the type of 
 
 A common problem in website security is the prevalence of fake domains.  These are often algorithmically generated domains used by Botnets in a technique called "domain fluxing".  Basically each botnet has regestered one (or a few) fake domains.  Each individual bot generates tens of thousands algorithmically domains and ping's them until one responds.  This is the bot 'phoning home'.  This allows the bot to change its domain making it very hard to blacklist by security programs.
 
-We will be using supervised and static methods to detect these domain names. Our ground truth will be real domain names from [Alexa](http://www.alexa.com/), located in `data/alexa`.
+We will be using supervised and static methods to detect these domain names. Our ground truth will be real domain names from [Alexa](http://www.alexa.com/), located in `data/alexa.csv`.
 
 ### Preparation
 
