@@ -8,20 +8,18 @@ A typical application of outlier/anomaly detection is finding unusual patterns i
 
 ![](img/sfgov.png)
 
-We will be looking at data requests for [sfdata.gov](https://data.sfgov.org/) for this part.  The data is in `data/access.csv`
+We will be looking at web page requests for [NASA Kennedy Space Center WWW server](http://ita.ee.lbl.gov/html/contrib/NASA-HTTP.html) in Florida for this part.  The data is in `data/nasa_log_july.tsv`
 
-1. Load the data into a DataFrame (and be sure to convert the time stamp on import) and perform some exploration.  What does each column represent?  How many data points are there and what is the time span for the data?
+1. Load the data into a DataFrame (and be sure to convert the timestamp on import) and perform some exploration.  What does each column represent?  How many data points are there and what is the time span for the data?
+
+2. Create a Series of the number of visits (across all requests/pages) per minute.
 
 ### Moving Window Statistics
 
-2. Look at what each column trend looks like.  Since there are quite a few columns you probably want to plot 4-5 at a time.
+2. Look at the trend of visits for across the site.  Plot the timeseries you just created.
 
-![](img/pandas_series.png)
-
-We will be focusing on the 'rows-loaded-api' column to try to detect any anomalous use of sfdata.gov's [Socrata](http://www.socrata.com/) API [portal](https://data.sfgov.org/analytics).  For the rest of the sprint any reference to the data/dataset will refer to this column.
-
-3. The simplest approach for time series anomaly detection is simply looking at moving window statistics.  Plot the 3, 5, and 10-day moving averages on this plot for the 'rows-loaded-api'.
-    * Can you simply eyeball a good heuristic to detect the peaks?
+3. The simplest approach for time series anomaly detection is simply looking at moving window statistics.  Plot the 3, 5, and 10-day moving averages on your timeseries plot.
+    * Can you simply eyeball a good heuristic to detect the peaks/anomolies?
 
 4.  We will look at a given point's delta from the mean (an approximation of a pointwise hypothesis test for outliers).  Plot both 2 and 3 standard deviations from the moving average.
 
@@ -33,9 +31,7 @@ We will be focusing on the 'rows-loaded-api' column to try to detect any anomalo
 
 We can also try a slightly more sophisticated approach when we know the type of data generating process (people).  We will look at page views for this part of the exercise (since API access is most likely programmatic and may not be governed by a distribution)
 
-1.  Using the same dataset (`data/access.csv`) will will look at the 'page-views' column.  Plot this.
-
-2. Are there any interesting patterns you can ascertain?  Plot a few moving averages (with varying window lengths) on the plot.
+2. Are there any interesting patterns you can ascertain in the page views dataset?  Plot a few moving averages (with varying window lengths) on the plot.
 
 3. There may be some interesting patterns, try to find what might be the cause of some of these patterns.  Look at a few of the other columns (think what might relate to page views) and try to find a correlated spike.
     * Try to find out what happened on that day
@@ -49,6 +45,20 @@ We can also try a slightly more sophisticated approach when we know the type of 
 7. We can now use this probability to flag any traffic that seems very unlikely.  Using this distribution, flag any data point that has less than a 2.3% chance of happening?
     * How many points are flagged?
     * How many points would be flagged if we used a threshold of 0.1%
+    
+8. Can you determine which are the weekend days based on the traffic?
+
+### Extra
+
+Perform the same analysis but this time for traffic stats from [sfdata.gov](https://data.sfgov.org/) for this part.  The data is in `data/access.csv`.
+
+__NOTE: Look at what each column trend looks like.  Since there are quite a few columns you probably want to plot 4-5 at a time.__
+
+![](img/pandas_series.png)
+
+We will be focusing on the 'rows-loaded-api' column to try to detect any anomalous use of sfdata.gov's [Socrata](http://www.socrata.com/) API [portal](https://data.sfgov.org/analytics).  
+
+1. Perform the above analysis on the 'rows-loaded-api' column.
 
 ## Phony Domains (static analysis)
 
