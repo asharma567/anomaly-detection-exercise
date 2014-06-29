@@ -122,8 +122,11 @@ Now that we have some properly featurized data we can apply the typical supervis
 
 3.  As we know all too well, accuracy is a very misleading metric (especially with unbalanced classes).  Create confusion matrix to compare the false positives and false negatives.
     * Which is worse in this case (false positive or false negative)?
+   
+4. To improve on the prediction and detect more of the fake domains we will perform some more feature engineering.  Using scikit-learn compute (and count) 3, 4, and 5 character ngrams of the domain names.
 
-4. Random forest also has the added benefit of performing some feature selection for us.   Since we only have a small number of features this isn't too important from a selection/reduction perspective, but it can tell us a stringer signal for a spoofed domain.  Which feature is the best indicator of a fake domain?
+
+4. Random forest also has the added benefit of performing some feature selection for us.  Since we only have a small number of features this isn't too important from a selection/reduction perspective, but it can tell us a stringer signal for a spoofed domain.  Which feature is the best indicator of a fake domain?
 
 4. We always usually want a second opinion in life.  Use scikit-learn's Logistic regression and create ROC plots for the LogisticRegression and Random forest.  Which one performs better?  And what might we want to set as our threshold?
 
